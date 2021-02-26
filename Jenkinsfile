@@ -12,17 +12,14 @@ pipeline {
   tools {
       maven 'maven'
   }
-  stages { 
-    stage('Maven Build') {
-	    steps {
-				sh 'mvn -B -DskipTests clean compile package'
-			}
-		}
-		stage('Test') {
-			steps {
-				sh 'mvn test'
-			}
-		}   
+  stages {
+    stage('Maven Install') {
+	agent any
+      	steps {
+		sh 'mvn -f ./first/pom.xml clean install'
+      	}
+    }
+
     stage('Install IBM Cloud CLI') {
       steps { 
         sh ''' 
